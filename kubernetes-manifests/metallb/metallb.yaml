@@ -11,18 +11,3 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: metallb-config
-  namespace: metallb-system
-spec:
-  dependsOn:
-    - name: metallb
-  interval: 1m
-  path: "./metallb/config"
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
