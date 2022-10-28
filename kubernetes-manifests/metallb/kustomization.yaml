@@ -5,3 +5,5 @@ resources:
   - namespace.yaml
   - helmrepo.yaml
   - helmrelease.yaml
+  - address-pool.yaml
+  - l2adver.yaml
