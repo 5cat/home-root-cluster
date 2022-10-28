@@ -8,31 +8,6 @@ metadata:
     pod-security.kubernetes.io/audit: privileged
     pod-security.kubernetes.io/warn: privileged
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: metallb
-  namespace: metallb-system
-spec:
-  interval: 5m
-  url: https://metallb.github.io/metallb
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: metallb
-  namespace: metallb-system
-spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: metallb
-      version: v0.13.7
-      interval: 5m
-      sourceRef:
-        kind: HelmRepository
-        name: metallb
----
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
