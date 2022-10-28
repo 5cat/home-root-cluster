@@ -19,7 +19,7 @@ metadata:
   namespace: metallb-system
 spec:
   dependsOn:
-     name: metallb
+    - name: metallb
   interval: 1m
   path: "./metallb/config"
   prune: true
