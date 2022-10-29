@@ -6,3 +6,4 @@ resources:
   - namespaces.yaml
   - crds.yaml
   - cores.yaml
+  - apps.yaml

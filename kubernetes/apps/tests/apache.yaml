@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: apache
+  namespace: tests
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: apache
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+  values:
+    service:
+      type: LoadBalancer
