@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - github.com/fluxcd/flux2/manifests/install?ref=v0.36.0
   - sources
+  - namespaces
   - flux
