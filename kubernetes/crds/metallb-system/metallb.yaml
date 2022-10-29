@@ -1,12 +1,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: sources
-  namespace: flux-system
-spec: 
-  interval: 1m
-  path: ./kubernetes/sources
+  name: metallb
+  namespace: metallb-system
+spec:
+  interval: 10m
+  path: ./config/native
   prune: true
+  wait: true
   sourceRef:
     kind: GitRepository
-    name: home-root-cluster
+    name: metallb
