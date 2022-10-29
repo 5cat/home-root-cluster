@@ -5,9 +5,9 @@ metadata:
   namespace: traefik
 spec:
   interval: 1m
+  install:
+    crds: skip
   chart:
-    install:
-      crds: skip
     spec:
       chart: traefik
       sourceRef:
