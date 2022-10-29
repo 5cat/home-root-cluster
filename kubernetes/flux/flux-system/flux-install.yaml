@@ -4,7 +4,7 @@ metadata:
   name: flux-install
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 300m
   path: ./manifests/install
   prune: true
   wait: true

@@ -4,7 +4,7 @@ metadata:
   name: flux2
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 30m
   ref:
     tag: "v0.32.0"
   url: https://github.com/fluxcd/flux2.git
