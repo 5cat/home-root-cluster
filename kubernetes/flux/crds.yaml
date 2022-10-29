@@ -6,7 +6,6 @@ metadata:
 spec: 
   dependsOn:
     - name: sources
-    - name: namespaces
   interval: 1m
   path: ./kubernetes/crds
   prune: true
