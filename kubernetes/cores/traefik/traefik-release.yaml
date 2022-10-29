@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1m
   install:
-    crds: skip
+    crds: Skip
   chart:
     spec:
       chart: traefik
