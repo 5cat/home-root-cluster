@@ -13,7 +13,8 @@ spec:
         name: bitnami
   values:
     service:
-      type: NodePort
+      type: LoadBalancer
+      loadBalancerIP: 192.168.35.2
     ingress:
       enabled: true
-      hostname: 192.168.35.1
+      hostname: apache.local
