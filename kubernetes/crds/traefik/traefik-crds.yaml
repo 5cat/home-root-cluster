@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1m0s
   prune: true
-  path: ./crds
+  path: ./traefik/crds
   sourceRef:
     kind: GitRepository
     name: traefik-helm-chart
