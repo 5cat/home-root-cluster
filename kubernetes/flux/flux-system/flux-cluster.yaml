@@ -1,13 +1,14 @@
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: flux-cluster
-  namespace: flux-system
+    name: flux-cluster
+    namespace: flux-system
 spec:
-  interval: 1m0s
-  path: ./kubernetes/flux
-  prune: true
-  wait: false
-  sourceRef:
-    kind: GitRepository
-    name: home-root-cluster
+    interval: 1m0s
+    path: ./kubernetes/flux
+    prune: true
+    wait: false
+    sourceRef:
+        kind: GitRepository
+        name: home-root-cluster
