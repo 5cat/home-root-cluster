@@ -15,6 +15,9 @@ spec:
                 name: renovatebot
             interval: 1m
     values:
+        cronjob:
+            schedule: '@hourly'
+            concurrencyPolicy: Forbid
         renovate:
             config: |
                 {
