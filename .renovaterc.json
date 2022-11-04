@@ -5,6 +5,6 @@
         "fileMatch": ["kubernetes/.+\\.yaml$"]
     },
     "flux": {
-        "fileMatch": ["kubernetes/flux/.+\\.yaml$"]
+        "fileMatch": ["kubernetes/.+\\.yaml$"]
     }
 }
