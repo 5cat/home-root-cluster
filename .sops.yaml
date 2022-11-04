@@ -1,0 +1,5 @@
+---
+creation_rules:
+    - path_regex: kubernetes/.*.yaml
+      encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))
+      age: age1zwu9n38f4n8ug2qtt65qtvnlmgtcwzs0n84a809v7rf9w5q6t9uscf2228  # pragma: allowlist secret

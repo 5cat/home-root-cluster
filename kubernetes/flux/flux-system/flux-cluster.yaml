@@ -23,3 +23,7 @@ spec:
     sourceRef:
         kind: GitRepository
         name: home-root-cluster
+    decryption:
+        provider: sops
+        secretRef:
+            name: sops-age
