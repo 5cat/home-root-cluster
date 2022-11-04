@@ -8,8 +8,7 @@ spec:
     interval: 1m
     chart:
         spec:
-            chart: renovate/renovate
-            version: 34.17.0
+            chart: renovate
             sourceRef:
                 kind: HelmRepository
                 name: renovatebot
