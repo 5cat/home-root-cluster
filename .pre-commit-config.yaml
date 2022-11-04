@@ -8,15 +8,15 @@ repos:
           - id: end-of-file-fixer
           - id: trailing-whitespace
 
-    - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-      rev: 0.2.2
-      hooks:
-          - id: yamlfmt
-
     - repo: https://github.com/adrienverge/yamllint
       rev: v1.28.0
       hooks:
           - id: yamllint
+
+    - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+      rev: 0.2.2
+      hooks:
+          - id: yamlfmt
 
     - repo: https://github.com/Agilicus/pre-commit-hook-k8svalidate
       rev: v0.1.0
