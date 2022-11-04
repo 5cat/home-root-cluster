@@ -1,0 +1,6 @@
+{
+    "dependencyDashboard": true,
+    "kubernetes": {
+        "fileMatch":: ["kubernetes/.+\\.yaml$"]
+    }
+}
