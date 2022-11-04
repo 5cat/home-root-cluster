@@ -22,4 +22,6 @@ spec:
                     "gitAuthor": "Renovate Bot <renovate@heaven.ist>",
                     "repositories": ["5cat/home-root-cluster"]
                 }
+        dind:
+            enabled: true
         existingSecret: renovate-secrets  # pragma: allowlist secret
