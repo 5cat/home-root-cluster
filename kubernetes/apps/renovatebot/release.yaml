@@ -15,10 +15,11 @@ spec:
             interval: 1m
     values:
         renovate:
-            config:
-                platform: github
-                username: 5cat
-                gitAuthor: Renovate Bot <renovate@heaven.ist>
-                repositories:
-                    - 5cat/home-root-cluster
+            config: |
+                {
+                    "platform": "github",
+                    "username": "5cat",
+                    "gitAuthor": "Renovate Bot <renovate@heaven.ist>",
+                    "repositories": ["5cat/home-root-cluster"]
+                }
         existingSecret: renovate-secrets  # pragma: allowlist secret
