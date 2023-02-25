@@ -40,7 +40,13 @@ kind: Ingress
 metadata:
     name: xen-orchestra
     namespace: xen-orchestra
+    annotations:
+        cert-manager.io/cluster-issuer: my-clusterissuer
 spec:
+    tls:
+        - hosts:
+              - xen.heaven.ist
+          secretName: my-xen-tls  # pragma: allowlist secret
     rules:
         - host: xen.heaven.ist
           http:
