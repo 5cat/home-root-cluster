@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: xen-orchestra
+    labels:
+        app: xen-orchestra
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: xen-orchestra
+    template:
+        metadata:
+            labels:
+                app: xen-orchestra
+        spec:
+            containers:
+                - name: xen-orchestra
+                  image: xen-orchestra:5.109.0
+                  ports:
+                      - containerPort: 80
