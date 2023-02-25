@@ -29,7 +29,7 @@ metadata:
     namespace: xen-orchestra
 spec:
     selector:
-        app.kubernetes.io/name: xen-orchestra
+        app: xen-orchestra
     ports:
         - protocol: TCP
           port: 80
