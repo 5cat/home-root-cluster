@@ -62,11 +62,11 @@
         path: /etc/portage/package.accept_keywords/default
         marker: "# {mark} k3s unmasking"
         block: |
-          =sys-cluster/k3s-1.25.3_p1::gentoo ~amd64
+          sys-cluster/k3s ~amd64
           app-misc/yq::gentoo ~amd64
     - name: install k3s
       portage:
-        package: =sys-cluster/k3s-1.25.3_p1::gentoo
+        package: "=sys-cluster/k3s-{{ k3s_version }}::gentoo"
         state: present
     - name: create k3s systemd override folder
       file:
