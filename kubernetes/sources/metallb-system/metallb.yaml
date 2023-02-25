@@ -5,10 +5,10 @@ metadata:
     name: metallb
     namespace: metallb-system
 spec:
-    interval: 10m
+    interval: 1m
     ref:
         tag: v0.13.9
-    url: https://github.com/metallb/metallb.git
+    url: https://github.com/metallb/metallb
     ignore: |
         # exclude all
         /*
