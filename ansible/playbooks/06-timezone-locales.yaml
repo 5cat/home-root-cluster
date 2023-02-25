@@ -1,0 +1,27 @@
+- hosts: all
+  name: timezone and locals
+  vars:
+    ansible_port: 8922
+  tasks:
+    - name: timezone symbolic link
+      file:
+        src: "../usr/share/zoneinfo/{{timezone}}"
+        dest: /etc/localtime
+        state: link
+        force: true
+    - name: configure locales
+      blockinfile:
+        path: /etc/locale.gen
+        block: |
+          en_AU ISO-8859-1
+          en_AU.UTF-8 UTF-8
+          C.UTF8 UTF-8
+    - name: locale-gen
+      command:
+        cmd: locale-gen
+    - name: select locale
+      command:
+        cmd: eselect locale set en_AU.UTF-8
+    - name: env-update
+      command:
+        cmd: env-update

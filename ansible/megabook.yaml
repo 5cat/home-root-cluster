@@ -1,0 +1,12 @@
+- import_playbook: playbooks/01-format_drives.yaml
+- import_playbook: playbooks/02-download_extract_tarball.yaml
+- import_playbook: playbooks/03-chrooting.yaml
+- import_playbook: playbooks/04-configure_portage.yaml
+- import_playbook: playbooks/06-timezone-locales.yaml
+- import_playbook: playbooks/07-kernel-configuration-compilation.yaml
+- import_playbook: playbooks/08-network.yaml
+- import_playbook: playbooks/09-bootloader.yaml
+- import_playbook: playbooks/10-prepare-for-restart.yaml
+- import_playbook: playbooks/11-after-restart.yaml
+- import_playbook: playbooks/12-install-packages.yaml
+- import_playbook: playbooks/13-configure-and-run-k3s.yaml

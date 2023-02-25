@@ -1,0 +1,33 @@
+- hosts: all
+  name: create a user and clean up files
+  tasks:
+    - name: create user
+      user:
+        name: "{{ username }}"
+        groups: [users, wheel, portage, cdrom, video, audio]
+        shell: /bin/bash
+        password: "{{ userpass | password_hash('sha512') }}"
+    - name: add ssh pub key to user
+      authorized_key:
+        user: "{{ username }}"
+        key: "{{ lookup('file', '{{ ansible_ssh_private_key_file }}.pub') }}"
+    - name: add bashrc
+      copy:
+        src: ../files/bashrc
+        dest: /home/{{ username }}/.bashrc
+    - name: find stage3 tar to delete
+      find:
+        paths: /
+        patterns: stage3-*.tar.*
+      register: stage3_path
+    - name: delete a file
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ stage3_path.files }}"
+- hosts: all
+  name: ping user
+  vars:
+    ansible_user: "{{ username }}"
+  tasks:
+    - ping:

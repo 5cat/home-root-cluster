@@ -5,6 +5,7 @@ repos:
       hooks:
           - id: check-yaml
             args: [--allow-multiple-documents]
+            files: ^kubernetes/.*.yaml$
           - id: end-of-file-fixer
           - id: trailing-whitespace
 
@@ -12,11 +13,13 @@ repos:
       rev: v1.28.0
       hooks:
           - id: yamllint
+            files: ^kubernetes/.*.yaml$
 
     - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
       rev: 0.2.2
       hooks:
           - id: yamlfmt
+            files: ^kubernetes/.*.yaml$
 
     - repo: https://github.com/Agilicus/pre-commit-hook-k8svalidate
       rev: v0.1.0

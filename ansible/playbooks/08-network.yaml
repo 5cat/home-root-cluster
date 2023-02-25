@@ -1,0 +1,28 @@
+- hosts: all
+  name: networking
+  vars:
+    ansible_port: 8922
+  tasks:
+    - name: systemd-firstboot
+      command:
+        cmd: systemd-firstboot --setup-machine-id --hostname={{hostname}}
+        creates: /etc/machine-id
+    - name: systemctl preset-all
+      command:
+        cmd: systemctl preset-all --preset-mode=enable-only
+    - name: installing dhcpcd
+      command: emerge --noreplace net-misc/dhcpcd
+    - name: enable dhcpcd
+      service:
+        name: dhcpcd
+        enabled: true
+    - name: enable sshd
+      service:
+        name: sshd
+        enabled: true
+    - name: install chrony
+      command: emerge --noreplace net-misc/chrony
+    - name: enable chronyd
+      service:
+        name: chronyd
+        enabled: true

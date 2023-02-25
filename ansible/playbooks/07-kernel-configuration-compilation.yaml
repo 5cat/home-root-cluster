@@ -1,0 +1,16 @@
+- hosts: all
+  name: compile and install kernel
+  vars:
+    ansible_port: 8922
+  tasks:
+    - name: install firmware
+      portage:
+        package:
+          - sys-kernel/linux-firmware
+          - sys-firmware/intel-microcode
+        state: present
+
+    - name: install kernel
+      portage:
+        package: sys-kernel/gentoo-kernel-bin
+        state: present

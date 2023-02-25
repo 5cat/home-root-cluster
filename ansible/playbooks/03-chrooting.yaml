@@ -1,0 +1,96 @@
+- hosts: all
+  name: chrooting
+  tasks:
+    - name: create portage repo folder
+      file:
+        path: /mnt/gentoo/etc/portage/repos.conf
+        state: directory
+    - name: copy repos.conf
+      copy:
+        remote_src: true
+        src: /mnt/gentoo/usr/share/portage/config/repos.conf
+        dest: /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+    - name: copy DNS info
+      copy:
+        remote_src: true
+        src: /etc/resolv.conf
+        dest: /mnt/gentoo/etc/
+        follow: true
+    - name: mounting proc
+      mount:
+        src: /proc
+        path: /mnt/gentoo/proc
+          # opts: proc
+        fstype: proc
+        state: mounted
+        fstab: /tmp/tmp.fstab
+    - name: mounting sys
+      mount:
+        src: /sys
+        path: /mnt/gentoo/sys
+        opts: rbind
+        fstype: sysfs
+        state: mounted
+        fstab: /tmp/tmp.fstab
+    - name: make-rslave for sys mount
+      shell: mount --make-rslave /mnt/gentoo/sys
+    - name: mounting dev
+      mount:
+        src: /dev
+        path: /mnt/gentoo/dev
+        opts: rbind
+        fstype: auto
+        state: mounted
+        fstab: /tmp/tmp.fstab
+    - name: make-rslave for dev mount
+      shell: mount --make-rslave /mnt/gentoo/dev
+    - name: mounting run
+      mount:
+        src: /run
+        path: /mnt/gentoo/run
+        opts: bind
+        fstype: auto
+        state: mounted
+        fstab: /tmp/tmp.fstab
+    - name: make-rslave for run mount
+      shell: mount --make-rslave /mnt/gentoo/run
+    - name: adding chroot sshd config in root
+      blockinfile:
+        path: /etc/ssh/sshd_config
+        block: |
+          Port 22
+          ChrootDirectory none
+          Port 8922
+          Match LocalPort 8922
+                ForceCommand chroot /mnt/gentoo /bin/bash -c "source /etc/profile && $SSH_ORIGINAL_COMMAND"
+    - name: copy public key as authorized keys in chroot
+      authorized_key:
+        user: root
+        key: "{{ lookup('file', '{{ ansible_ssh_private_key_file }}.pub') }}"
+    - name: restart sshd service
+      service:
+        name: sshd
+        state: restarted
+- hosts: all
+  name: create bootable drive
+  vars:
+    ansible_port: 8922
+  tasks:
+    - name: getting the uuid of boot
+      command: "lsblk /dev/{{ drive_name }}1 -no UUID"
+      register: boot_uuid
+    - name: adding boot to fstab
+      mount:
+        src: UUID={{ boot_uuid.stdout_lines[0] }}
+        path: /boot
+        fstype: vfat
+        state: mounted
+    - name: getting uuid of root
+      command: "lsblk /dev/{{ drive_name }}2 -no UUID"
+      register: root_uuid
+    - name: adding root to fstab
+      mount:
+        src: UUID={{ root_uuid.stdout_lines[0] }}
+        path: /
+        fstype: ext4
+        state: present

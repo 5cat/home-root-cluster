@@ -1,0 +1,21 @@
+- hosts: all
+  name: configure bootloader
+  vars:
+    ansible_port: 8922
+  tasks:
+    - name: add grub variables
+      blockinfile:
+        path: /etc/portage/make.conf
+        marker: "# {mark} grub variable"
+        block: |
+          GRUB_PLATFORMS="efi-64"
+    - name: compile grub
+      command: emerge --noreplace sys-boot/grub
+    - name: install grub
+      command:
+        cmd: grub-install --target=x86_64-efi --efi-directory=/boot
+        creates: /boot/grub
+    - name: configure grub
+      command:
+        cmd: grub-mkconfig -o /boot/grub/grub.cfg
+        creates: /boot/grub/grub.cfg

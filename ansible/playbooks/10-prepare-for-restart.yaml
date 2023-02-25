@@ -1,0 +1,31 @@
+- hosts: all
+  name: add a root password
+  vars:
+    ansible_port: 8922
+  tasks:
+    - name: change password for root user
+      user:
+        name: root
+        password: "{{ ansible_ssh_pass | password_hash('sha512') }}"
+    - name: permit root login
+      lineinfile:
+        path: "/etc/ssh/sshd_config"
+        regex: "^(#)?{{item.key}}"
+        line: "{{item.key}} {{item.value}}"
+        state: present
+      loop:
+        - { key: "PermitRootLogin", value: "yes" }
+    - name: copy ssh key
+      authorized_key:
+        user: root
+        key: "{{ lookup('file', '{{ ansible_ssh_private_key_file }}.pub') }}"
+
+- hosts: all
+  name: umount and reboot
+  tasks:
+    - name: umount /dev
+      shell: umount -ql /mnt/gentoo/dev{/shm,/pts,}
+    - name: umount /
+      shell: umount -qR /mnt/gentoo
+    - name: reboot
+      reboot:

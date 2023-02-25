@@ -1,0 +1,45 @@
+- hosts: all
+  name: "parition drives"
+  tasks:
+    - name: clear drive
+      command: wipefs -a /dev/{{ drive_name }}
+    - name: create boot partition
+      parted:
+        device: "/dev/{{ drive_name }}"
+        label: gpt
+        flags: [ boot ]
+        number: 1
+        state: present
+        part_end: 256MiB
+        fs_type: fat32
+    - name: clear format boot
+      filesystem:
+        state: absent
+        dev: "/dev/{{ drive_name }}1"
+    - name: format boot
+      filesystem:
+        fstype: vfat
+        dev: "/dev/{{ drive_name }}1"
+    - name: create root parition
+      parted:
+        device: "/dev/{{ drive_name }}"
+        label: gpt
+        number: 2
+        state: present
+        part_start: 256MiB
+        part_end: "100%"
+        fs_type: ext4
+    - name: clear format root
+      filesystem:
+        state: absent
+        dev: "/dev/{{ drive_name }}2"
+    - name: format root
+      filesystem:
+        fstype: ext4
+        dev: "/dev/{{ drive_name }}2"
+    - name: mount root
+      mount:
+        fstype: ext4
+        src: "/dev/{{ drive_name }}2"
+        path: /mnt/gentoo
+        state: mounted

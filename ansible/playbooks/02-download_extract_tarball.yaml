@@ -1,0 +1,20 @@
+- hosts: all
+  name: download and extract tarball
+  tasks:
+    - name: sync clocks
+      shell: ntpd -q -g
+    - name: "download tarball"
+      register: tarball_info
+      get_url:
+        url: "{{ tarball_url }}"
+        dest: /mnt/gentoo
+        force: false
+    - name: extracting tarball
+      unarchive:
+        remote_src: true
+        src: "{{ tarball_info.dest }}"
+        dest: /mnt/gentoo
+        extra_opts:
+          - "--xattrs-include='*.*'"
+          - "--numeric-owner"
+          - "--preserve-permissions"

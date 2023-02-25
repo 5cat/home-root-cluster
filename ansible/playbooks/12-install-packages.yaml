@@ -1,0 +1,86 @@
+- hosts: all
+  name: install packages
+  tasks:
+    - name: install doas
+      portage:
+        package: app-admin/doas
+        state: present
+    - name: configure doas
+      copy:
+        dest: /etc/doas.conf
+        content: |
+            permit nopass :wheel
+
+    - name: install bash completion
+      portage:
+        package: app-shells/bash-completion
+        state: present
+    - name: install sys-power/acpid
+      portage:
+        package: sys-power/acpid
+        state: present
+    - name: configure acpi
+      copy:
+        src: "../files/default.sh"
+        dest: /etc/acpi
+    - name: stop logind from suspending the machine
+      lineinfile:
+        path: /etc/systemd/logind.conf
+        regexp: "^HandleLidSwitch="
+        insertafter: '^#HandleLidSwitch='
+        line: "HandleLidSwitch=ignore"
+      register: logindconf
+    - name: restart logind
+      systemd:
+        enabled: true
+        name: systemd-logind
+        state: restarted
+      when: logindconf.changed
+    - name: install dev-libs/light
+      portage:
+        package: dev-libs/light
+        state: present
+    - name: enable and start acpid service
+      systemd:
+        name: acpid
+        state: started
+    - name: install app-editors/vim
+      portage:
+        package: app-editors/vim
+        state: present
+    - name: install net-fs/nfs-utils
+      portage:
+        package: net-fs/nfs-utils
+        state: present
+    - name: install sys-process/htop
+      portage:
+        package: sys-process/htop
+        state: present
+    - name: unmask k3s
+      blockinfile:
+        create: true
+        path: /etc/portage/package.accept_keywords/default
+        marker: "# {mark} k3s unmasking"
+        block: |
+          =sys-cluster/k3s-1.25.3_p1::gentoo ~amd64
+          app-misc/yq::gentoo ~amd64
+    - name: install k3s
+      portage:
+        package: =sys-cluster/k3s-1.25.3_p1::gentoo
+        state: present
+    - name: create k3s systemd override folder
+      file:
+        path: /etc/systemd/system/k3s.service.d/
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+    - name: override k3s systemd service
+      copy:
+        src: ../files/k3s-systemd-override.conf
+        dest: /etc/systemd/system/k3s.service.d/override.conf
+    - name: systemd daemon reload
+      systemd:
+        name: k3s
+        enabled: true
+        daemon-reload: true

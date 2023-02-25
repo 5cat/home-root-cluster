@@ -1,0 +1,6 @@
+- hosts: chroot
+  tasks:
+    - command: "ls /"
+      register: files
+    - debug: var={{item}}
+      with_items: files.stdout_lines

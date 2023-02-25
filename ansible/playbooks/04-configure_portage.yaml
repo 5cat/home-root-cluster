@@ -1,0 +1,27 @@
+- hosts: all
+  name: configure porate
+  vars:
+    ansible_port: 8922
+  tasks:
+    - name: configure make.conf
+      blockinfile:
+        path: /etc/portage/make.conf
+        block: |
+          {{ item.key }}={{ item.value }}
+        marker: "# {mark} for {{ item.key }}"
+      loop:
+        - { key: MAKEOPTS, value: "\"-j{{ ncpu }} -l{{ ncpu }}\"" }
+        - { key: EMERGE_DEFAULT_OPTS, value: "\"--jobs {{ ncpu }} --load-average {{ ncpu }}.0\"" }
+        - { key: ACCEPT_LICENSE, value: "\"*\"" }
+        - { key: FEATURES, value: "\"preserve-libs\"" }
+        - { key: USE, value: "\"{{ useflags | join(' ') }}\"" }
+    - name: webrsync
+      command:
+        cmd: emerge-webrsync
+        creates: /var/db/repos/gentoo
+    - name: emerge world set
+      command:
+        cmd: emerge --verbose --update --deep --newuse @world
+    - name: install Gentoolkit
+      command:
+        cmd: emerge --noreplace app-portage/gentoolkit
