@@ -1,0 +1,16 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+    name: cert-manager
+    namespace: cert-manager
+spec:
+    interval: 1m
+    ref:
+        tag: v1.11.0
+    url: https://github.com/cert-manager/cert-manager.git
+    ignore: |
+        # exclude all
+        /*
+        # path to manifests
+        !/deploy/
