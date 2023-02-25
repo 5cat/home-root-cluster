@@ -6,8 +6,6 @@ metadata:
     namespace: cert-manager
 spec:
     interval: 1m
-    install:
-        crds: Skip
     chart:
         spec:
             chart: cert-manager
@@ -17,4 +15,4 @@ spec:
                 name: jetstack
             interval: 1m
     values:
-        installCRDs: false
+        installCRDs: true
