@@ -54,7 +54,7 @@ spec:
             serviceAccountName: external-dns-adguard
             containers:
                 - name: external-dns-adguard
-                  image: ghcr.io/natisayada/external-dns-adguard:main
+                  image: ghcr.io/natisayada/external-dns-adguard:f46eb87
                   env:
                       - name: DOMAIN_NAME
                         value: heaven.ist
