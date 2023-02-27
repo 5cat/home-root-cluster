@@ -63,6 +63,6 @@ spec:
                       - name: ADGURED_PASS
                         value: veryrandompassword
                       - name: ADGURED_DNS
-                        value: adguard-adguard-home.dns.svc.local.:3000
+                        value: adguard-adguard-home.dns.svc.cluster.local.:3000
                       - name: MODE
                         value: PROD
