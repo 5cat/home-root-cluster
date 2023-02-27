@@ -58,6 +58,10 @@ spec:
                   env:
                       - name: DOMAIN_NAME
                         value: heaven.ist
+                      - name: ADGURED_USER
+                        value: veryrandomuser
+                      - name: ADGURED_PASS
+                        value: veryrandompassword
                       - name: ADGURED_DNS
                         value: adguard-adguard-home.dns.svc.local.:3000
                       - name: MODE
