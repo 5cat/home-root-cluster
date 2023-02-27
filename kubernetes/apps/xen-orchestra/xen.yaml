@@ -68,10 +68,10 @@ metadata:
 spec:
     tls:
         - hosts:
-              - xen.heaven.ist
-          secretName: my-xen-tls  # pragma: allowlist secret
+              - xoce.heaven.ist
+          secretName: my-xoce-tls  # pragma: allowlist secret
     rules:
-        - host: xen.heaven.ist
+        - host: xoce.heaven.ist
           http:
               paths:
                   - path: /
