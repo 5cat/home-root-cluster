@@ -3,6 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
     name: xen-orchestra
+    namespace: xen-orchestra
 spec:
     accessModes:
         - ReadWriteMany
