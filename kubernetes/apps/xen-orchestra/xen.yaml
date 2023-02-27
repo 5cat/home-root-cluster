@@ -1,4 +1,15 @@
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: xen-orchestra
+spec:
+    accessModes:
+        - ReadWriteMany
+    resources:
+        requests:
+            storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,6 +32,17 @@ spec:
                   image: ronivay/xen-orchestra:5.109.0
                   ports:
                       - containerPort: 80
+                  volumeMounts:
+                      - name: xen-orchestra
+                        mountPath: /var/lib/xo-server
+                        subPath: xo-server
+                      - name: xen-orchestra
+                        mountPath: /var/lib/redis
+                        subPath: redis
+            volumes:
+                - name: xen-orchestra
+                  persistentVolumeClaim:
+                      claimName: xen-orchestra
 ---
 apiVersion: v1
 kind: Service
