@@ -40,9 +40,6 @@ spec:
                       - name: xen-orchestra
                         mountPath: /var/lib/redis
                         subPath: redis
-                      #- name: xen-orchestra
-                      #  mountPath: /etc/xo-server
-                      #  subPath: xo-server
             volumes:
                 - name: xen-orchestra
                   persistentVolumeClaim:
