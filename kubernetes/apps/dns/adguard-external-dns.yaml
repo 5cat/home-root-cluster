@@ -54,7 +54,7 @@ spec:
             serviceAccountName: external-dns-adguard
             containers:
                 - name: external-dns-adguard
-                  image: ghcr.io/natisayada/external-dns-adguard:f46eb87
+                  image: ghcr.io/natisayada/external-dns-adguard@sha256:f46eb87a89afcc967a9b7e90cb4c74b783db13538d2d6ddb73a4996873edbdec  # yamllint disable-line
                   env:
                       - name: DOMAIN_NAME
                         value: heaven.ist
