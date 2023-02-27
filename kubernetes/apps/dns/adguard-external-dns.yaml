@@ -1,0 +1,64 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: external-dns-adguard
+    namespace: dns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    name: external-dns-adguard-readonly-ingress
+    namespace: dns
+    annotations:
+        rbac.authorization.kubernetes.io/autoupdate: 'true'
+rules:
+    - apiGroups:
+          - extensions
+      resources: ['*']
+      verbs:
+          - get
+          - list
+          - watch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+    name: external-dns-adguard-role-binding
+subjects:
+    - kind: ServiceAccount
+      name: external-dns-adguard
+      namespace: dns
+roleRef:
+    kind: ClusterRole
+    name: external-dns-adguard-readonly-ingress
+    apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: external-dns-adguard
+    namespace: dns
+    labels:
+        app: external-dns-adguard
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: external-dns-adguard
+    template:
+        metadata:
+            labels:
+                app: external-dns-adguard
+        spec:
+            serviceAccountName: external-dns-adguard
+            containers:
+                - name: external-dns-adguard
+                  image: ghcr.io/natisayada/external-dns-adguard:main
+                  env:
+                      - name: DOMAIN_NAME
+                        value: heaven.ist
+                      - name: ADGURED_DNS
+                        value: adguard-adguard-home.dns.svc.local.:3000
+                      - name: MODE
+                        value: PROD
