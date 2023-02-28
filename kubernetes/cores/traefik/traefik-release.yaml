@@ -16,6 +16,10 @@ spec:
                 name: traefik-helm-chart
             interval: 1m
     values:
+        providers:
+            kubernetesIngress:
+                publishedService:
+                    enabled: true
         service:
             type: LoadBalancer
             spec:
