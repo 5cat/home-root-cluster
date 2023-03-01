@@ -14,12 +14,14 @@ metadata:
         rbac.authorization.kubernetes.io/autoupdate: 'true'
 rules:
     - apiGroups:
-          - extensions
-      resources: ['*']
+          - networking.k8s.io
+      resources:
+          - ingresses
       verbs:
           - get
           - list
           - watch
+          - patch
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
