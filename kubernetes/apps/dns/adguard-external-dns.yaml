@@ -58,7 +58,7 @@ spec:
                 - name: adguard-external-dns
                   image: ghcr.io/5cat/adguard-external-dns:master  # yamllint disable-line
                   env:
-                      - name: DOMAIN_NAME
-                        value: heaven.ist
+                      - name: DOMAIN_regex
+                        value: .*\.heaven\.ist
                       - name: ADGUARD_HOST
                         value: adguard-adguard-home.dns.svc.cluster.local.:3000
